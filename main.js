@@ -1,6 +1,44 @@
 var gameplayElement = document.querySelector('#gameplay');
 var preparerElement = document.querySelector('#preparer');
 
+var timer = {};
+
+timer.init = function() {
+  console.log('init');
+
+  timer.startTime = new Date();
+  timer.element = document.createElement('div');
+  timer.element.id = 'timer-box';
+
+  gameplay.element.appendChild(timer.element);
+
+  timer.interval = setInterval(function(){
+    timer.updateTime();
+  }, 1000);
+};
+
+timer.updateTime = function() {
+  var endTime = new Date().getTime();
+  var startTime = timer.startTime.getTime();
+  var diff = Math.abs(endTime - startTime);
+  var minutes = parseInt(diff / (1000 * 60) % 60);
+  var seconds = parseInt(diff / (1000) % 60);
+
+  minutes = minutes >= 10 ? minutes : '0' + minutes;
+  seconds = seconds >= 10 ? seconds : '0' + seconds;
+
+  timer.text = minutes + ' : ' + seconds;
+  timer.displayTime();
+}
+
+timer.displayTime = function() {
+  timer.element.innerText = timer.text;
+}
+
+timer.stopTime = function() {
+  clearInterval(timer.interval);
+}
+
 var gameplay = {
   element: gameplayElement,
   rect: gameplayElement.getBoundingClientRect(),
@@ -86,6 +124,20 @@ gameplay.setAnswer = function(word) {
   }
 
   gameplay.question.answer.element.innerText = answers.join(' ');
+
+  gameplay.checkFinish();
+}
+
+gameplay.checkFinish = function() {
+  // we may need to check more things for safe. But the length is enough for now.
+  if (gameplay.question.question.words.length === gameplay.question.answer.words.length) {
+    gameplay.finishGame();
+  }
+}
+
+gameplay.finishGame = function() {
+  timer.stopTime();
+  showScore();
 }
 
 var displayQuestionRect = {
@@ -183,10 +235,58 @@ function addWords(words) {
 function playGame() {
   var sentence = "dat va nhi that la de thuong";
 
-  prepareGame(sentence);
-  console.log('init game', gameplay);
+  var buttonElement = document.querySelector(".button");
 
-  var wordSprites = addWords(gameplay.question.question.words);
+  buttonElement.className = "button out";
+
+  setTimeout(function() {
+    prepareGame(sentence);
+    console.log('init game', gameplay);
+
+    var wordSprites = addWords(gameplay.question.question.words);
+    timer.init();
+  }, 1000);
 }
 
-playGame();
+function showScore() {
+  gameplay.element.innerHTML = "";
+  gameplay.element.innerText = "";
+
+  var scoreTextElement = document.createElement('div');
+  scoreTextElement.id = 'score-text';
+  scoreTextElement.innerText = 'Your Score';
+
+  var scoreElement = document.createElement('div');
+  scoreElement.id = 'score-box';
+  scoreElement.innerText = timer.text;
+
+  var playGameElement = document.createElement('a');
+  playGameElement.className = 'button';
+  playGameElement.innerText = 'Play Again';
+
+  playGameElement.addEventListener('click', playGame);
+
+  gameplay.element.appendChild(scoreTextElement);
+  gameplay.element.appendChild(scoreElement);
+  gameplay.element.appendChild(playGameElement);
+}
+
+function splashScreen() {
+  gameplay.element.innerHTML = "";
+  gameplay.element.innerText = "";
+
+  var gameNameElement = document.createElement('div');
+  gameNameElement.id = 'game-name';
+  gameNameElement.innerText = 'word game';
+
+  var playGameElement = document.createElement('a');
+  playGameElement.className = 'button';
+  playGameElement.innerText = 'Play';
+
+  playGameElement.addEventListener('click', playGame);
+
+  gameplay.element.appendChild(gameNameElement);
+  gameplay.element.appendChild(playGameElement);
+}
+
+splashScreen();

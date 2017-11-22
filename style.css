@@ -48,12 +48,20 @@ div {
   left: 30px;
   box-sizing: border-box;
   top: 430px;
-  height: 35px;
+  height: 45px;
   border-bottom: 1px solid #888888;
   padding: 10px;
   text-align: center;
-  color: #d5d5d5;
-  font-size: 12px;
+  color: #000;
+  font-size: 21px;
+}
+
+#answer-box.valid {
+  border-bottom: 5px solid #41c864;
+}
+
+#answer-box.invalid {
+  border-bottom: 5px solid #eb4141;
 }
 
 #question-box {
@@ -61,17 +69,85 @@ div {
   width: 560px;
   left: 30px;
   box-sizing: border-box;
-  top: 465px;
+  top: 475px;
   padding: 10px;
   text-align: center;
   color: #d5d5d5;
   font-size: 12px;
 }
 
-#answer-box.valid {
-  border-bottom: 5px solid green;
+#timer-box {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 560px;
+  text-align: center;
+  font-size: 12px;
+  color: #888888;
 }
 
-#answer-box.invalid {
-  border-bottom: 5px solid #eb4141;
+#score-text {
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  text-align: center;
+  color: #d5d5d5;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+#score-box {
+  position: absolute;
+  top: 220px;
+  width: 100%;
+  text-align: center;
+  color: #000;
+  font-size: 60px;
+}
+
+#game-name {
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #d5d5d5;
+  font-size: 60px;
+}
+
+.button {
+  left: 0;
+  right: 0;
+  display: block;
+  width: 110px;
+  top: 320px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 18px;
+  color: #ffffff;
+  background: #41c864;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.button.out {
+  animation: nudge 1s ease;
+}
+
+@keyframes nudge {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(0, 50px);
+  }
+
+  80% {
+    transform: translate(0, -50px);
+  }
 }
