@@ -233,6 +233,7 @@ function addWords(words) {
 }
 
 function playGame() {
+  // limitation: 25 words
   var sentence = "dat va nhi that la de thuong";
 
   var buttonElement = document.querySelector(".button");
@@ -288,5 +289,3 @@ function splashScreen() {
   gameplay.element.appendChild(gameNameElement);
   gameplay.element.appendChild(playGameElement);
 }
-
-splashScreen();
