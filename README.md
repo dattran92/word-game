@@ -1,5 +1,5 @@
 # word-game
-Just a word game
+Just a word game - written with pure JS, no polyfill or lib used.
 
 # demo
 [https://dattran92.github.io/word-game/](https://dattran92.github.io/word-game/)
